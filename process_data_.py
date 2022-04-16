@@ -7,7 +7,7 @@ from torchtext.data.functional import to_map_style_dataset
 import torch
 
 from torchtext.datasets import AG_NEWS
-
+from torch.utils.data import DataLoader
 
 tokenizer = get_tokenizer('basic_english')
 train_iter,test_iter = AG_NEWS()
@@ -35,6 +35,10 @@ def collate_batch(batch):
     offsets = torch.tensor(offsets[:-1]).cumsum(dim=0)
     text_list = torch.cat(text_list)
     return label_list, text_list, offsets
+
+'''weird behaviour of to_map_style_dataset,requires this line'''
+train_iter = AG_NEWS(split='train')
+dataloader = DataLoader(train_iter, batch_size=8, shuffle=False, collate_fn=collate_batch)
 
 '''Create datasets for train/test/eval'''
 train_dataset = to_map_style_dataset(train_iter)
