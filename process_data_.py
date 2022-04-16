@@ -43,4 +43,5 @@ num_train = int(len(train_dataset) * 0.95)
 split_train_, split_valid_ = \
     random_split(train_dataset, [num_train, len(train_dataset) - num_train])
 
-num_class = len(set([label for (label, text) in train_iter]))
+train_iter = AG_NEWS(split='train')
+num_class  = len(set([label for (label, text) in train_iter]))
